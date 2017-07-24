@@ -3,8 +3,10 @@ package simpleaes;
 import java.io.UnsupportedEncodingException;
 
 /**
- * A simplified version of AES algorithm. In this version, 
- * only the first three steps are performed in every rotation.
+ * A simplified version of Advanced Encryption Standard algorithm. In this
+ * version, only the first the steps sub bytes, shift rows, and mix columns are
+ * performed in every rotation.
+ *
  * @author alex
  */
 public class SimpleAES {
@@ -52,6 +54,7 @@ public class SimpleAES {
      *
      * Uses getBits() to get the individual bits in each byte Uses getX() and
      * getY() to get index into sbox
+     *
      * @param k
      * @return
      */
@@ -75,6 +78,7 @@ public class SimpleAES {
     /**
      * Shifts the first row by 0, second by 1, 3rd by 2, and 4th by 3 using the
      * shiftRow method on each row.
+     *
      * @param k
      * @return
      */
@@ -96,11 +100,11 @@ public class SimpleAES {
     }
 
     /**
-     * This operation uses matrix multiplication on the key with
-     * the GF8 matrix. 
+     * This operation uses matrix multiplication on the key with the GF8 matrix.
+     *
      * @param key
      * @param tran_matrix
-     * @return 
+     * @return
      */
     public static byte[] mixColumns(byte[] key, int[] tran_matrix) {
         byte[] nKey = new byte[16];
@@ -113,11 +117,11 @@ public class SimpleAES {
             row[2] = tran_matrix[(4 * i) + 2];
             row[3] = tran_matrix[(4 * i) + 3];
             for (int j = 0; j < 4; j++) {
-                column[0] = (int)key[j];
-                column[1] = (int)key[4 + j];
-                column[2] = (int)key[8 + j];
-                column[3] = (int)key[12 + j];
-                nKey[(4 * i) + j] = multRC(row,column);
+                column[0] = (int) key[j];
+                column[1] = (int) key[4 + j];
+                column[2] = (int) key[8 + j];
+                column[3] = (int) key[12 + j];
+                nKey[(4 * i) + j] = multRC(row, column);
             }
 
         }
@@ -128,12 +132,12 @@ public class SimpleAES {
     //////////////////////////////
     //      Helper Methods      //
     //////////////////////////////
-
     /**
      * Multiplies a single row with a single column
+     *
      * @param row
      * @param column
-     * @return 
+     * @return
      */
     public static byte multRC(int[] row, int[] column) {
         int[] nColumn = new int[4];
@@ -167,9 +171,10 @@ public class SimpleAES {
         result = result ^ nColumn[3];
         return (byte) result;
     }
-    
+
     /**
      * Returns x value based on subBytes algorithm using bits 7,6,5,4
+     *
      * @TODO: could be backwards
      * @param bits
      * @return
@@ -182,6 +187,7 @@ public class SimpleAES {
 
     /**
      * Returns y value based on subBytes algorithm using bits 3,2,1,0
+     *
      * @param bits
      * @return
      */
@@ -193,6 +199,7 @@ public class SimpleAES {
 
     /**
      * Returns an int array of the bits in inputted byte
+     *
      * @param b
      * @return
      */
@@ -213,6 +220,7 @@ public class SimpleAES {
 
     /**
      * Does the shifting for a single row in the byte matrix.
+     *
      * @param b
      * @param offset
      * @return
@@ -224,12 +232,12 @@ public class SimpleAES {
         }
         return temp;
     }
-    
+
     /**
-     * Flips the matrix over diagonal to turn it from row
-     * major to colum major.
+     * Flips the matrix over diagonal to turn it from row major to colum major.
+     *
      * @param key
-     * @return 
+     * @return
      */
     public static byte[] columnMajor(byte[] key) {
         byte[] nKey = new byte[16];
@@ -245,6 +253,7 @@ public class SimpleAES {
 
     /**
      * Prints Byte array in hex for debugging and final output.
+     *
      * @param key
      */
     public static void printColumnBytes(byte[] key) {
@@ -259,7 +268,8 @@ public class SimpleAES {
 
     /**
      * Prints bytes in order that they are stored
-     * @param key 
+     *
+     * @param key
      */
     public static void printBytes(byte[] key) {
         StringBuilder sb = new StringBuilder();
@@ -272,7 +282,8 @@ public class SimpleAES {
 
     /**
      * prints bytes in a matrix format
-     * @param key 
+     *
+     * @param key
      */
     public static void printMatrix(byte[] key) {
         StringBuilder sb = new StringBuilder();
@@ -289,7 +300,8 @@ public class SimpleAES {
 
     /**
      * Prints integers in a matrix format
-     * @param key 
+     *
+     * @param key
      */
     public static void printMatrix(int[] key) {
         StringBuilder sb = new StringBuilder();
